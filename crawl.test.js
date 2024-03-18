@@ -29,11 +29,28 @@ test("normalizeURL strip http", () => {
   expect(actualOutput).toEqual(expectedOutput);
 });
 
-test("getURLsFromHTML", () => {
+test("getURLsFromHTML absolute", () => {
   const inputHTMLBody = `
   <html>
     <body>
-      <a href="https://blog.boot.dev/">
+      <a href="https://blog.boot.dev/path/">
+        Boot.dev Blog
+      </a>
+    </body>
+  </html>
+  `;
+
+  const inputBaseURL = "https://blog.boot.dev/path/";
+  const actualOutput = getURLsFromHTML(inputHTMLBody, inputBaseURL);
+  const expectedOutput = ["https://blog.boot.dev/path/"];
+  expect(actualOutput).toEqual(expectedOutput);
+});
+
+test("getURLsFromHTML relative", () => {
+  const inputHTMLBody = `
+  <html>
+    <body>
+      <a href="/path">
         Boot.dev Blog
       </a>
     </body>
@@ -42,6 +59,6 @@ test("getURLsFromHTML", () => {
 
   const inputBaseURL = "https://blog.boot.dev";
   const actualOutput = getURLsFromHTML(inputHTMLBody, inputBaseURL);
-  const expectedOutput = ["https://blog.boot.dev/"];
+  const expectedOutput = ["https://blog.boot.dev/path"];
   expect(actualOutput).toEqual(expectedOutput);
 });

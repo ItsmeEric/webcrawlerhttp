@@ -6,7 +6,13 @@ function getURLsFromHTML(htmlBody, baseURL) {
   const linkElements = dom.window.document.querySelectorAll("a");
 
   for (const linkElement of linkElements) {
-    urls.push(linkElement.href);
+    if (linkElement.href.slice(0, 1) === "/") {
+      // relative url
+      urls.push(`${baseURL}${linkElement.href}`);
+    } else {
+      // absolute url
+      urls.push(linkElement.href);
+    }
   }
   return urls;
 }
