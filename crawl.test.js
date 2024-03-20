@@ -85,3 +85,20 @@ test("getURLsFromHTML both", () => {
   ];
   expect(actualOutput).toEqual(expectedOutput);
 });
+
+test("getURLsFromHTML invalid", () => {
+  const inputHTMLBody = `
+  <html>
+    <body>
+      <a href="invalid">
+        Invalid URL
+      </a>
+    </body>
+  </html>
+  `;
+
+  const inputBaseURL = "https://blog.boot.dev";
+  const actualOutput = getURLsFromHTML(inputHTMLBody, inputBaseURL);
+  const expectedOutput = [];
+  expect(actualOutput).toEqual(expectedOutput);
+});
